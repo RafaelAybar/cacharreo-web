@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tournament example</title>
+</head>
+<body>
+<h1> Bienvenidos al gestor de torneos más rancio de la historia </h1>
+<h3> Formulario de registro </h3>
+    <form>
+        <label for="username">Usuario:</label>
+        <input type="text" id="username" name="username"
+               pattern="^[a-zA-Z0-9_]{4,}[a-zA-Z]+[0-9]*$"
+               title="Mínimo 4 caracteres, "
+               required>
+        <br>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password"
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]{8,15}"
+               title="Debe contener 8 o más caracteres con 1 mayúscula, 1 minúscula, números y nada de cosas raras"
+               required>
+        <br>
+        <input type="submit"></form>
+<br>
+<h3> Inicia sesión </h3>
+<form>
+    <label for="username">Usuario:</label>
+        <input type="text" id="user_login" name="username"
+               pattern="^[a-zA-Z0-9_]{4,}[a-zA-Z]+[0-9]*$"
+               title="Mínimo 4 caracteres, "
+               required>
+        <br>
+        <label for="password">Contraseña:</label>
+        <input type="password" id="login_password" name="password"
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]{8,15}"
+               title="Debe contener 8 o más caracteres con 1 mayúscula, 1 minúscula, números y nada de cosas raras"
+               required>
+        <br>
+        <input type="submit"></form>
+</body>
+</html>

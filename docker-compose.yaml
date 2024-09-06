@@ -1,0 +1,34 @@
+services:
+  postgres:
+    container_name: bd
+    image: postgres:16-alpine
+    ports:
+      - "127.0.0.1:5432:5432"
+    profiles:
+      - bd-sola
+      - backend
+      - full
+      - production
+  backend:
+    container_name: backend
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    profiles:
+      - backend
+      - full
+      - produccion
+  frontend:
+    container_name: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:4000:3000" # Así se evita conflicto con Grafana
+    profiles:
+      - full
+      - produccion
+networks:
+  demo:
