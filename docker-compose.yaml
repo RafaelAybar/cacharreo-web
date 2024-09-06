@@ -9,6 +9,12 @@ services:
       - backend
       - full
       - production
+    volumes:
+      - "./postgres_data:/var/lib/postgresql/data"
+    networks:
+      - demo
+    env_file:
+      - env/postgres.env
   backend:
     container_name: backend
     build:
@@ -20,6 +26,8 @@ services:
       - backend
       - full
       - produccion
+    networks:
+      - demo
   frontend:
     container_name: frontend
     build:
@@ -30,5 +38,7 @@ services:
     profiles:
       - full
       - produccion
+    networks:
+      - demo
 networks:
   demo:

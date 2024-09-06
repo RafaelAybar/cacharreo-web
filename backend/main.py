@@ -1,8 +1,8 @@
 #!/usr/bin/python3
+from fastapi import FastAPI
 
-from fastapi import FastApi
-app = FastApi()
+app = FastAPI()
 
 @app.get("/")
-async def raiz():
-    return {"message": "Gestor de torneos"}
+def raiz():
+    return {"mensaje": "Gestor de torneos"}
