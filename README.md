@@ -6,7 +6,7 @@ Otro proyecto web sin más
 Para practicar programación (cosas básicas o como máximo de complejidad media).
 También quiero probar temas de observabilidad con Open Telemetry, métricas, trazas, etc.
 
-# Herramientas
+## Herramientas
 Seguramente cambie en el futuro, pero de momento:
 
 * Docker
@@ -23,6 +23,7 @@ Para empezar a practicar, la app será un gestor de torneos de cartas de Yugioh,
 ## Criterios del torneo
 1. Gestión de Jugadores
     * Número de jugadores: Aunque no está pensada para torneos grandes (más de 50 personas) se pondrá un máximo de 2049. Las rondas se configuran así:
+
 
     | Nº de jugadores           | Nº de rondas (Sistema Suizo)                | Top Cut |
     |-------------------------|-----------------------------------|------------------------------------|
