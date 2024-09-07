@@ -30,7 +30,7 @@ Por ello vamos a crear un usuario nuevo que sólo tenga permisos en nuestra base
 El código en SQL podría ser este:
 ```SQL
 CREATE user admin_aplicacion WITH PASSWORD 'CámbiamePorFavor2024';
-
+CREATE SCHEMA IF NOT EXISTS gestor_de_torneos;
 -- Permisos al nivel de schema
 GRANT CONNECT ON DATABASE test TO admin_aplicacion;
 GRANT USAGE ON SCHEMA gestor_torneos TO admin_aplicacion;

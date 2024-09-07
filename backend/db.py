@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from datetime import datetime, timezone
-
+import hashlib
 import config
 
 # Evitamos
@@ -15,10 +15,9 @@ class Base(DeclarativeBase):
 class User(Base):
     __tablename__ = 'usuarios'
     __table_args__= { 'schema': config.POSTGRES_SCHEMA }
-    id = Column(Integer, primary_key=True)
-    username = Column(String, unique=True, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-    password = Column(String, nullable=False)
+    cossy = Column(String(10), primary_key=True)
+    usuario = Column(String(15), unique=True, nullable=False)
+    contrasena = Column(String, nullable=False)
     created = Column(DateTime, default=datetime.now(timezone.utc).replace(tzinfo=None))
     last_login = Column(DateTime, nullable=True)
 
