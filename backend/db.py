@@ -7,12 +7,10 @@ engine = create_engine(f"postgresql+psycopg2://{config.POSTGRES_USER}:{config.PO
 metadata = MetaData()
 
 users_table = Table('users', metadata,
-                    Column('user_id', Integer, primary_key=True, autoincrement=True),
-                    Column('username', VARCHAR(50), nullable=False, unique=True),
+                    Column('cossy_id', Integer, primary_key=True),
                     Column('email', VARCHAR(100), nullable=False, unique=True),
                     Column('password_hash', VARCHAR(255), nullable=False),
-                    Column('first_name', VARCHAR(50)),
-                    Column('last_name', VARCHAR(50)),
+                    Column('nombre_completo', VARCHAR(50), nullable=False),
                     Column('created_at', DateTime(timezone=True), server_default=func.now()),
                     Column('updated_at', DateTime(timezone=True), server_default=func.now(), onupdate=func.now()),
                     Column('is_active', Boolean, default=True),

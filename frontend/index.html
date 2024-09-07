@@ -11,15 +11,18 @@
     <form>
         <label for="username">Usuario:</label>
         <input type="text" id="username" name="username"
-               pattern="^[a-zA-Z0-9_]{4,}[a-zA-Z]+[0-9]*$"
-               title="Mínimo 4 caracteres, "
-               required>
+               pattern="^[a-zA-Z0-9_]{4,}[a-zA-Z]+[0-9]*$" title="Mínimo 4 caracteres" required>
         <br>
         <label for="password">Contraseña:</label>
         <input type="password" id="password" name="password"
                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[A-Za-z\d@$!%*?&]{8,15}"
-               title="Debe contener 8 o más caracteres con 1 mayúscula, 1 minúscula, números y nada de cosas raras"
+               title="Debe contener de 8 a15 con 1 mayúscula, 1 minúscula, números y nada de cosas raras"
                required>
+        <br>
+        <label for="password">Cossy ID:</label>
+        <input type="text" id="cossy" name="cossy"
+               pattern="^\d{10}$"
+               title="Debe ser un número de 10 dígitos" required>
         <br>
         <input type="submit"></form>
 <br>
