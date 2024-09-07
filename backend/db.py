@@ -1,26 +1,28 @@
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, CheckConstraint, DateTime,func, Boolean, CheckConstraint
-from sqlalchemy.dialects.postgresql import VARCHAR
+from sqlalchemy import create_engine, Column, Integer, String, DateTime
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from datetime import datetime, timezone
+
 import config
 
+# Evitamos
+coneector_app = create_engine(f"postgresql+psycopg2://{config.APP_DB_USER}:{config.APP_DB_PASS}@{config.POSTGRES_HOST}:{config.POSTGRES_PORT}/{config.POSTGRES_DB}")
 
-engine = create_engine(f"postgresql+psycopg2://{config.POSTGRES_USER}:{config.POSTGRES_PASSWORD}@{config.POSTGRES_HOST}:{config.POSTGRES_PORT}/{config.POSTGRES_DB}")
-metadata = MetaData()
 
-users_table = Table('users', metadata,
-                    Column('cossy_id', Integer, primary_key=True),
-                    Column('email', VARCHAR(100), nullable=False, unique=True),
-                    Column('password_hash', VARCHAR(255), nullable=False),
-                    Column('nombre_completo', VARCHAR(50), nullable=False),
-                    Column('created_at', DateTime(timezone=True), server_default=func.now()),
-                    Column('updated_at', DateTime(timezone=True), server_default=func.now(), onupdate=func.now()),
-                    Column('is_active', Boolean, default=True),
-                    CheckConstraint(r"email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'", name='email_format')
-                    )
+class Base(DeclarativeBase):
+    pass
 
-# Create the table in the database
-metadata.create_all(engine)
 
-# Create the schema and the table in the database
-metadata.create_all(engine)
+class User(Base):
+    __tablename__ = 'usuarios'
+    __table_args__= { 'schema': config.POSTGRES_SCHEMA }
+    id = Column(Integer, primary_key=True)
+    username = Column(String, unique=True, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
+    created = Column(DateTime, default=datetime.now(timezone.utc).replace(tzinfo=None))
+    last_login = Column(DateTime, nullable=True)
 
-print("Schema 'test' created successfully!")
+
+Base.metadata.create_all(coneector_app)
+
+print("Todo creado en orden")
