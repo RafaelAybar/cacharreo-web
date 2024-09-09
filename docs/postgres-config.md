@@ -17,6 +17,7 @@ Ejemplo:
 POSTGRES_DB=test
 POSTGRES_HOST=127.0.0.1
 POSTGRES_PORT=5432
+POSTGRES_SCHEMA=gestor_torneos
 APP_DB_USER=admin_aplicacion
 APP_DB_PASS=CámbiamePorFavor2024
 ```

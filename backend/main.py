@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from re import match
 from sqlalchemy import select
 from sqlalchemy.orm.session import Session
-from db import coneector_app, User
+from db import conector_app, User
+from credenciales import hash_contrasena
 
 def valida_usuario(usuario: str) -> bool:
     return bool(match(r'^[a-zA-Z0-9]{5,20}$', usuario))
@@ -26,12 +27,15 @@ async def get_all_users():
 
 @app.post("crear_usuario")
 async def creacion_usuario(user:str, passw:str , cossy_id: str) -> str:
-    mensaje = "Usuario creado con éxito"
     if valida_cossy(cossy_id) and valida_cossy(usuario) and valida_pass(passw):
-        with Session(bind=coneector_app) as sesion:
+        with Session(bind=conector_app) as sesion:
             usuario_existente = select(User).filter_by(id=cossy_id)
             if not usuario_existente:
-                usuario = User(usuario=user, cossy=cossy_id, contrasena=passw),
+                usuario = User(usuario=user, cossy=cossy_id, contrasena=hash_contrasena(passw))
+                sesion.add(usuario)
+                sesion.commit()
+                sesion.close
+                return {"mensaje": "Usuario creado correctamente"}
             else:
-                mensaje = "El usuario con ese cossy ya existe"
-    return mensaje
+                sesion.close()
+                raise HTTPException(status_code=400, detail="El usuario ya existe")
