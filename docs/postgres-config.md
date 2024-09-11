@@ -4,7 +4,7 @@
 En la carpeta env, hay que crear el fichero `postgres.env`, y poner las variables de la siguiente manera:
 ```
 POSTGRES_USER=test
-POSTGRES_PASS=test
+POSTGRES_PASSWORD=test
 POSTGRES_DB=test
 ```
 Cambia los valores por defecto.

@@ -3,7 +3,6 @@ from sqlalchemy.orm import DeclarativeBase
 from datetime import datetime, timezone
 import config
 
-# Evitamos
 conector_app = create_engine(f"postgresql+psycopg2://{config.APP_DB_USER}:{config.APP_DB_PASS}@{config.POSTGRES_HOST}:{config.POSTGRES_PORT}/{config.POSTGRES_DB}")
 
 
@@ -22,5 +21,3 @@ class User(Base):
 
 
 Base.metadata.create_all(conector_app)
-
-print("Todo creado en orden")
