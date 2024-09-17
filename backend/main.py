@@ -1,9 +1,10 @@
-from fastapi import FastAPI, HTTPException
 from re import match
+
+from fastapi import FastAPI, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm.session import Session
-from db import conector_app, User
-from .credenciales import hash_contrasena
+from backend.credenciales import hash_contrasena
+from backend.db import User, conector_app
 
 
 def valida_usuario(usuario: str) -> bool:
@@ -37,8 +38,8 @@ async def creacion_usuario(usuario: str, passw: str, cossy_id: str):
         with Session(bind=conector_app) as sesion:
             usuario_existente = select(User).filter_by(id=cossy_id)
             if not usuario_existente:
-                usuario = User(usuario=usuario, cossy=cossy_id, contrasena=hash_contrasena(passw))
-                sesion.add(usuario)
+                nuevo_usuario = User(usuario=usuario, cossy=cossy_id, contrasena=hash_contrasena(passw))
+                sesion.add(nuevo_usuario)
                 sesion.commit()
                 sesion.close()
                 return {"mensaje": "Usuario creado correctamente"}
