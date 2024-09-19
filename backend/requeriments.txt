@@ -1,4 +1,4 @@
-fastapi[standard]==0.114.2
+fastapi[standard]==0.115
 redis==5.0.8
 SQLAlchemy==2.0.34
 psycopg2-binary==2.9.9
