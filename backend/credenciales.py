@@ -1,9 +1,12 @@
-from hashlib import sha3_512
+from hashlib import scrypt
 from os import urandom
 
-#https://pagorun.medium.com/password-encryption-in-python-securing-your-data-9e0045e039e1
-def hash_contrasena(passw: str):
-    sal = urandom(40)
-    hash_passw = sha3_512()
-    hash_passw.update(sal+ passw.encode())
-    return hash_passw.hexdigest()
+def hash_contrasena(contrasena: str):
+    sal = urandom(25)
+    hash_contrasena = scrypt(contrasena.encode(), salt=sal, n=32768, r=8, p=1)
+    return sal + hash_contrasena
+
+def comprobar_contrasena(contrasena: str, hash_almacenado: bytes) -> bool:
+    sal_almacenada = hash_almacenado[:25]
+    nuevo_hash = scrypt(contrasena.encode(), salt=sal_almacenada, n=32768, r=8, p=1)
+    return hash_almacenado == nuevo_hash
