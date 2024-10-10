@@ -53,9 +53,11 @@ async def login(usuario: str, passw: str, cossy_id: str, db: Session = Depends(c
   if valida_datos(usuario, passw, cossy_id):
     usuario_existente = usuario_existe(db, cossy_id)
     if usuario_existente:
-            hash_almacenado = usuario_existe.contrasena
+            hash_almacenado = usuario_existente.contrasena
             if comprobar_contrasena(passw, hash_almacenado):
                 return {"mensaje": "¡Sesión iniciada!"}
+            else:
+                return {"mensaje":"Cossy o contraseña inválidos"}
     else:
         return {"mensaje": "El usuario no existe"}
   else:
