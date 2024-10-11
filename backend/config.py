@@ -7,3 +7,5 @@ POSTGRES_SCHEMA=getenv("POSTGRES_SCHEMA", "gestor_torneos")
 
 APP_DB_USER=getenv("APP_DB_USER", "admin_aplicacion")
 APP_DB_PASS=getenv("APP_DB_PASS", "securepassowrd")
+
+CLAVE_SECRETA=getenv("CLAVE_SECRETA", "Cámbiame inmediatamente") # Para firmar las cookies

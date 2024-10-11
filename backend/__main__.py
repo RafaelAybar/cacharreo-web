@@ -1,9 +1,13 @@
 from re import match
-from fastapi import FastAPI, HTTPException, Depends
+from datetime import timedelta
+from fastapi import FastAPI, HTTPException, Depends, Response
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from sqlalchemy import select
 from sqlalchemy.orm.session import Session
 from .credenciales import hash_contrasena, comprobar_contrasena
 from .db import User, conector_app
+from config import CLAVE_SECRETA
 
 
 def valida_datos(usuario: str, contrasena: str , cossy: str) -> bool:
@@ -21,8 +25,16 @@ def usuario_existe(db: Session, cossy_id: str) -> User:
     usuario_existente = db.execute(select(User).filter_by(cossy=cossy_id)).scalars().first()
     return usuario_existente
 
+
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def raiz():
@@ -49,16 +61,24 @@ async def creacion_usuario(usuario: str, passw: str, cossy_id: str, db: Session 
 
 
 @app.post("/login")
-async def login(usuario: str, passw: str, cossy_id: str, db: Session = Depends(conectordb)):
+async def login( respuesta: Response, usuario: str, passw: str, cossy_id: str, db: Session = Depends(conectordb)) -> JSONResponse:
   if valida_datos(usuario, passw, cossy_id):
     usuario_existente = usuario_existe(db, cossy_id)
     if usuario_existente:
             hash_almacenado = usuario_existente.contrasena
             if comprobar_contrasena(passw, hash_almacenado):
-                return {"mensaje": "¡Sesión iniciada!"}
+                respuesta.set_cookie(
+                    key="sesion",
+                    value="pendientedeprobar",
+                    max_age=timedelta(days=1).total_seconds(),
+                    httponly=True,
+                    samesite="Lax",
+                    secure=True,
+                )
+                return JSONResponse(content={"mensaje": "Sesión iniciada"})
             else:
-                return {"mensaje":"Cossy o contraseña inválidos"}
+                return JSONResponse(content={"mensaje": "Cossy o contraseña incorrectos"})
     else:
-        return {"mensaje": "El usuario no existe"}
+        return JSONResponse(content={"mensaje": "El usuario no existe"})
   else:
-    return {"mensaje": "Datos no válidos"}
+    return JSONResponse(content={"mensaje": "Cossy o contraseña inválidos"})
