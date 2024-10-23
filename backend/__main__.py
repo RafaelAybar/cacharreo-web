@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy import select
 from sqlalchemy.orm.session import Session
-from .credenciales import hash_contrasena, comprobar_contrasena
+from .credenciales import hash_contrasena, comprobar_contrasena, generar_jwt
 from .db import User, conector_app
 from config import CLAVE_SECRETA
 
@@ -75,7 +75,9 @@ async def login( respuesta: Response, usuario: str, passw: str, cossy_id: str, d
                     samesite="Lax",
                     secure=True,
                 )
+
                 return JSONResponse(content={"mensaje": "Sesión iniciada"})
+
             else:
                 return JSONResponse(content={"mensaje": "Cossy o contraseña incorrectos"})
     else:
