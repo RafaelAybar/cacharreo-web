@@ -18,11 +18,9 @@ def comprobar_contrasena(contrasena: str, hash_almacenado: bytes) -> bool:
     nuevo_hash = scrypt(contrasena.encode(), salt=sal_almacenada, n=16384, r=8, p=1)
     return nuevo_hash == clave_almacenada
 
+
 def generar_jwt(clave: str, tiempo_expira_horas: int, cossy: str) -> str:
-    payload = {
-        'cossy': cossy,
-        'fecha': datetime.datetime.now(datetime.UTC)
-    }
+    payload = {"cossy": cossy, "fecha": datetime.datetime.now(datetime.UTC)}
 
     algoritmo = "HS256"
     token = encode(payload, CLAVE_SECRETA, algorithm=algoritmo)
