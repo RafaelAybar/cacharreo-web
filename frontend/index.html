@@ -6,7 +6,7 @@
     <title>Tournament example</title>
 </head>
 <body>
-<h1> Bienvenidos al gestor de torneos más rancio de la historia </h1>
+<h1> Bienvenidos al gestor de torneos </h1>
 <h3> Formulario de registro </h3>
     <form>
         <label for="username">Usuario:</label>
@@ -28,11 +28,11 @@
 <br>
 <h3> Inicia sesión </h3>
 <form>
-    <label for="username">Usuario:</label>
-        <input type="text" id="user_login" name="username"
-               pattern="^[a-zA-Z0-9_]{4,}[a-zA-Z]+[0-9]*$"
-               title="Mínimo 4 caracteres, "
-               required>
+       <label for="password">Cossy ID:</label>
+       <input type="text" id="cossy" name="cossy"
+              pattern="^\d{10}$"
+              title="Debe ser un número de 10 dígitos" required>
+       <br>
         <br>
         <label for="password">Contraseña:</label>
         <input type="password" id="login_password" name="password"

@@ -25,30 +25,37 @@ Para empezar a practicar, la app será un gestor de torneos de cartas de Yugioh,
     * Número de jugadores: Aunque no está pensada para torneos grandes (más de 50 personas) se pondrá un máximo de 2049. Las rondas se configuran así:
 
 
-    | Nº de jugadores           | Nº de rondas (Sistema Suizo)                | Top Cut |
-    |-------------------------|-----------------------------------|------------------------------------|
-    | 4 - 8                   | 3 Rounds of Swiss                 | Top 1                              |
-    | 9 - 16                  | 4 Rounds of Swiss                 | Top 4                              |
-    | 17 - 32                 | 5 Rounds of Swiss                 | Top 4                              |
-    | 33 - 64                 | 6 Rounds of Swiss                 | Top 8                              |
-    | 65 - 128                | 7 Rounds of Swiss                 | Top 8                              |
-    | 129 - 256               | 8 Rounds of Swiss                 | Top 16                             |
-    | 257 - 512               | 9 Rounds of Swiss                 | Top 16                             |
-    | 513 - 1024              | 10 Rounds of Swiss                | Top 32                             |
-    | 1025 - 2048             | 11 Rounds of Swiss                | Top 32                             |
-    | 2049                    | 12 Rounds of Swiss                | Top 64                             |
+    | Nº de jugadores         | Nº de rondas (Sistema Suizo)      | Top Cut                 |
+    |-------------------------|-----------------------------------|-------------------------|
+    | 4 - 8                   | 3 Rondas               | Top 1                              |
+    | 9 - 16                  | 4 Rondas               | Top 4                              |
+    | 17 - 32                 | 5 Rondas               | Top 4                              |
+    | 33 - 64                 | 6 Rondas               | Top 8                              |
+    | 65 - 128                | 7 Rondas               | Top 8                              |
+    | 129 - 256               | 8 Rondas               | Top 16                             |
+    | 257 - 512               | 9 Rondas               | Top 16                             |
+    | 513 - 1024              | 10 Rondas              | Top 32                             |
+    | 1025 - 2048             | 11 Rondas              | Top 32                             |
+    | 2049                    | 12 Rondas              | Top 64                             |
+
+
+    * Un jugador puede darse de alta ANTES de que se lanze la primera ronda.
+    * Un jugador puede abandonar un torneo.
+
 
 2. Puntuación y pairing:
-* Victoria: 2 puntos
-* Empate: 1 punto
+* Victoria: 2000000000 puntos
+* Empate: 1000000000 puntos
 * BYE: Si el número de jugadores es impar, el jugador que se quede fuera tendrá una victoria.
 
 3. Gestión de mazos
-
-En cada torneo cada jugador subirá su deck decklist en formato PDF oficial de Konami. El sistema comprobará que el mazo cumple con los requisitos.
+    * Un jugador registrará un deck EN UN FORMATO específico al unirse a un torneo.
+    * Hay diferentes formatos disponibles, luego cada torneo tendrá su lista de prohibidas.
+    * Un jugador puede tener varios decks, que ha usado en uno, o más torneos.
 
 4. Documentación técnica
-* [Base de datos](docs/postgres-config.md)
+* [Configuración de base de datos](docs/postgres-config.md)
+* [Diseño de base de datos](docs/diseño.md)
 
 ## Enlaces de interés
 

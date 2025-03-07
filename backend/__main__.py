@@ -1,29 +1,13 @@
-from re import match
 from datetime import timedelta
 from fastapi import FastAPI, HTTPException, Depends, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from sqlalchemy import select
+from .validaciones import valida_datos_para_registro, usuario_existe
 from sqlalchemy.orm.session import Session
-from .credenciales import hash_contrasena, comprobar_contrasena, generar_jwt
+from .credenciales import hash_contrasena, comprobar_contrasena
 from .db import User, conector_app
-from .config import NIVEL_LOG
-from logging import getLogger
+from .comun import logger
 from datetime import date
-
-# Configuración de logs
-logger = getLogger("uvicorn")
-
-
-def valida_datos(usuario: str, contrasena: str, cossy: str) -> bool:
-    return (
-        match(r"^[a-zA-Z0-9]{5,20}$", usuario)
-        and match(
-            r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,15}$",
-            contrasena,
-        )
-        and match(r"^\d{10}$", cossy)
-    )
 
 
 def conectordb():
@@ -32,13 +16,6 @@ def conectordb():
         yield db  # https://alvarohurtado.es/2020/06/08/que-hace-yield-en-python/
     finally:
         db.close()
-
-
-def usuario_existe(db: Session, cossy_id: str) -> User:
-    usuario_existente = (
-        db.execute(select(User).filter_by(cossy=cossy_id)).scalars().first()
-    )
-    return usuario_existente
 
 
 app = FastAPI()
@@ -60,14 +37,14 @@ async def raiz():
 
 @app.get("/usuarios")
 async def get_all_users():
-    return "users"
+    return "Pendiente"
 
 
 @app.post("/crear_usuario")
 async def creacion_usuario(
     usuario: str, passw: str, cossy_id: str, db: Session = Depends(conectordb)
 ):
-    if valida_datos(usuario, passw, cossy_id):
+    if valida_datos_para_registro(usuario, passw, cossy_id):
         if not usuario_existe(db, cossy_id):
             nuevo_usuario = User(
                 usuario=usuario, cossy=cossy_id, contrasena=hash_contrasena(passw)
@@ -89,7 +66,7 @@ async def login(
     cossy_id: str,
     db: Session = Depends(conectordb),
 ) -> JSONResponse:
-    if valida_datos(usuario, passw, cossy_id):
+    if valida_datos_para_registro(usuario, passw, cossy_id):
         usuario_existente = usuario_existe(db, cossy_id)
         if usuario_existente:
             hash_almacenado = usuario_existente.contrasena
