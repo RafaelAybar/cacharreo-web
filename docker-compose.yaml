@@ -7,8 +7,7 @@ services:
     profiles:
       - bd-sola
       - backend
-      - full
-      - production
+      - produccion
     volumes:
       - "./postgres_data:/var/lib/postgresql/data"
     networks:
@@ -24,7 +23,6 @@ services:
       - "127.0.0.1:8000:8000"
     profiles:
       - backend
-      - full
       - produccion
     networks:
       - demo
@@ -36,7 +34,7 @@ services:
     ports:
       - "127.0.0.1:4000:3000" # Así se evita conflicto con Grafana
     profiles:
-      - full
+
       - produccion
     networks:
       - demo

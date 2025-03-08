@@ -56,6 +56,7 @@ Para empezar a practicar, la app será un gestor de torneos de cartas de Yugioh,
 4. Documentación técnica
 * [Configuración de base de datos](docs/postgres-config.md)
 * [Diseño de base de datos](docs/diseño.md)
+* [Desarrollo](docs/programacion.md)
 
 ## Enlaces de interés
 
